@@ -24,8 +24,13 @@ pipeline {
       parallel {
         stage('Code Analysis') {
           steps {
-            bat 'gradle sonarqube'
-            waitForQualityGate true
+            withSonarQubeEnv() { // Will pick the global server connection you have configured
+              bat 'gradle sonarqube'
+            }
+            def qualitygate = waitForQualityGate()
+            if (qualitygate.status != "OK") {
+               error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
+            }
           }
         }
 
