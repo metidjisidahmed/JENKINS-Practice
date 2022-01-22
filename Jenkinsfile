@@ -1,7 +1,6 @@
 pipeline {
   agent any
   stages {
-    
     stage('build') {
       post {
         success {
@@ -20,27 +19,28 @@ pipeline {
         junit(testResults: 'build/reports/tests/test', allowEmptyResults: true)
       }
     }
-    
-      stage('Code Analysis') {
-       
-           steps {
-              withSonarQubeEnv('TP8_OGL_JENKINS') {
-                 bat "sonar-scanner"   
-              }
 
+    stage('Code Analysis') {
+      parallel {
+        stage('Code Analysis') {
+          steps {
+            withSonarQubeEnv('TP8_OGL_JENKINS') {
+              bat 'sonar-scanner'
+              waitForQualityGate true
+            }
 
-           } 
+          }
+        }
 
-    }
-    
-      stage("Quality Gate") {
-    steps {
-      timeout(time: 1, unit: 'MINUTES') {
-          waitForQualityGate abortPipeline: true
+        stage('Cucumber report') {
+          steps {
+            cucumber 'target/report.json'
+          }
+        }
+
       }
     }
-  }
-    
+
     stage('Publish') {
       steps {
         bat 'gradle publish'
