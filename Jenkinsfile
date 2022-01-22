@@ -1,6 +1,7 @@
 pipeline {
   agent any
   stages {
+    
     stage('build') {
       post {
         success {
@@ -20,6 +21,11 @@ pipeline {
       }
     }
     
+      stage('SonarQube analysis') {
+    withSonarQubeEnv('My SonarQube Server') {
+      bat 'sonar-scanner'
+    } // submitted SonarQube taskId is automatically attached to the pipeline context
+  }
     
     stage('Publish') {
       steps {
