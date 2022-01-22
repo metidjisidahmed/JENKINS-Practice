@@ -27,12 +27,7 @@ pipeline {
               withSonarQubeEnv('TP8_OGL_JENKINS') {
                  bat "sonar-scanner"   
               }
-             script{
-                def qualitygate = waitForQualityGate()
-                if (qualitygate.status != "OK") {
-                   error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
-                }
-             }
+
 
            } 
 
