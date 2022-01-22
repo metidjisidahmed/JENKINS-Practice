@@ -22,10 +22,17 @@ pipeline {
     }
     
       stage('SonarQube analysis') {
-    withSonarQubeEnv('My SonarQube Server') {
-      bat 'sonar-scanner'
-    } // submitted SonarQube taskId is automatically attached to the pipeline context
-  }
+       
+           steps {
+              withSonarQubeEnv('SonarQube') {
+                 bat "sonar-scanner"   
+              }
+             def qualitygate = waitForQualityGate()
+              if (qualitygate.status != "OK") {
+                 error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
+              }
+
+    }
     
     stage('Publish') {
       steps {
