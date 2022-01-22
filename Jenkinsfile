@@ -21,7 +21,7 @@ pipeline {
       }
     }
     
-      stage('SonarQube analysis') {
+      stage('TP8_OGL_JENKINS') {
        
            steps {
               withSonarQubeEnv() {
