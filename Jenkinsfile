@@ -20,6 +20,34 @@ pipeline {
       }
     }
 
+    stage('Code Analysis') {
+      parallel {
+        stage('Code Analysis') {
+          steps {
+            waitForQualityGate true
+          }
+        }
+
+        stage('Test Reporting') {
+          steps {
+            cucumber 'target/report.json'
+          }
+        }
+
+      }
+    }
+
+    stage('Publish') {
+      steps {
+        bat 'gradle publish'
+      }
+    }
+
+    stage('Slack Notifications') {
+      steps {
+        slackSend(baseUrl: 'https://hooks.slack.com/services/', token: 'T02S71TC7EH/B02SZN07R08/df3SCOkFu6oGC9VYtrwEVUD6', message: 'New build is Created', channel: 'OGL')
+      }
+    }
 
   }
 }
