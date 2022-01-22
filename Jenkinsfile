@@ -26,8 +26,11 @@ pipeline {
           steps {
             withSonarQubeEnv('TP8_OGL_JENKINS') {
               bat 'sonar-scanner'
-              waitForQualityGate true
+              timeout(time: 1, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+              }
             }
+
 
           }
         }
