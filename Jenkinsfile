@@ -20,11 +20,6 @@ pipeline {
       }
     }
 
-    stage('mail') {
-      steps {
-        mail(subject: 'blabla', body: 'babla body', to: 'ia_bacha@esi.dz', from: 'is_metidji@esi.dz')
-      }
-    }
 
   }
 }
