@@ -3,6 +3,7 @@ pipeline {
   stages {
     stage('build') {
       post {
+        
         success {
           mail(subject: 'Build Success', body: 'New Build is deployed !', from: 'is_metidji@esi.dz', to: 'is_metidji@esi.dz')
         }
