@@ -19,7 +19,6 @@ pipeline {
         junit(testResults: 'build/reports/tests/test', allowEmptyResults: true)
       }
     }
-
     stage('Code Analysis') {
       parallel {
         stage('Code Analysis') {
