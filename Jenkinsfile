@@ -4,11 +4,11 @@ pipeline {
     stage('build') {
       post {
         success {
-          mail(subject: 'Build Success', body: 'New Build is deployed !', from: 'is_metidji@esi.dz', to: 'im_aliousalah@esi.dz')
+          mail(subject: 'Build Success', body: 'New Build is deployed !', from: 'is_metidji@esi.dz', to: 'is_metidji@esi.dz')
         }
 
         failure {
-          mail(subject: 'Build Failure', body: 'New Build is deployed !', from: 'is_metidji@esi.dz', to: 'im_aliousalah@esi.dz')
+          mail(subject: 'Build Failure', body: 'New Build is deployed !', from: 'is_metidji@esi.dz', to: 'is_metidji@esi.dz')
         }
 
       }
@@ -40,6 +40,7 @@ pipeline {
 
       }
     }
+
 
     stage('Publish') {
       steps {
