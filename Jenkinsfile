@@ -9,6 +9,7 @@ pipeline {
         failure {
           mail(subject: 'Build Failure', body: 'New Build is deployed !', from: 'is_metidji@esi.dz', to: 'is_metidji@esi.dz')
         }
+        
 
       }
       steps {
